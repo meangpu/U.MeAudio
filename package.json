@@ -1,0 +1,15 @@
+{
+  "name": "com.meangpu.audio",
+  "version": "0.0.1",
+  "unity": "2021.3",
+  "displayName": "MeAudio",
+  "description": "Meangpu audio system \n- for audio setting prefab",
+  "type": "template",
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6"
+  },
+  "author": {
+    "name": "meangpu",
+    "url": "https://github.com/meangpu"
+  }
+}
