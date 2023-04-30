@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using System;
 
-[Serializable]
-public class Sound : ISerializationCallbackReceiver
+[System.Serializable]
+public class Sound
 {
     public string audioName;
     public AudioClip clip;
@@ -17,21 +16,6 @@ public class Sound : ISerializationCallbackReceiver
     public bool loop;
     [HideInInspector]
     public AudioSource source;
-    [SerializeField] private bool _serialized = false;
-
-    public void OnBeforeSerialize()
-    {
-    }
-
-    public void OnAfterDeserialize()
-    {
-        if (_serialized == false)
-        {
-            volume = 1;
-            pitch = 1;
-            _serialized = true;
-        }
-    }
 
 
 }
