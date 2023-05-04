@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] Sound[] _sounds;
     public static AudioManager instance;
     private AudioSource[] _allAudioSources;
+    AudioSource _freeSource;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class AudioManager : MonoBehaviour
             s.source.spatialBlend = s.blend;
             s.source.loop = s.loop;
         }
+        _freeSource = gameObject.AddComponent<AudioSource>();
     }
 
     Sound FindSound(string soundName)
@@ -139,6 +141,16 @@ public class AudioManager : MonoBehaviour
             return;
         }
         foundSound.source.volume = foundSound.volume;
+    }
+
+    public void PlayAudioClipAtPos(AudioClip _clip, Transform _trans)
+    {
+        transform.position = _trans.position;
+        _freeSource.clip = _clip;
+        _freeSource.spatialBlend = .5f;
+        _freeSource.Play();
+        Debug.Log($"play");
+
     }
 
 }
