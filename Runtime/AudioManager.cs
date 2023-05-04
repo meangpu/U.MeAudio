@@ -147,9 +147,8 @@ public class AudioManager : MonoBehaviour
     {
         transform.position = _trans.position;
         _freeSource.clip = _clip;
-        _freeSource.spatialBlend = .5f;
+        _freeSource.spatialBlend = 1;
         _freeSource.Play();
-        Debug.Log($"play");
 
     }
 
