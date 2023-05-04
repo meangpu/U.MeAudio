@@ -146,22 +146,15 @@ public class AudioManager : MonoBehaviour
         foundSound.source.volume = foundSound.volume;
     }
 
-    public void PlayAudioClipAtPos(AudioClip _clip, Transform _trans)
+    public void PlayAudioClipAtPos(AudioClip _clip, Transform _trans, float _volume = 1, float min = 0.7f, float max = 1.5f)
     {
         transform.position = _trans.position;
         _freeSource.clip = _clip;
-        _freeSource.spatialBlend = 1;
-        _freeSource.Play();
-    }
-
-    public void PlayAudioClipAtPosRandomPitch(AudioClip _clip, Transform _trans, float min = 0.7f, float max = 1.5f)
-    {
-        transform.position = _trans.position;
-        _freeSource.clip = _clip;
+        _freeSource.volume = _volume;
         _freeSource.pitch = UnityEngine.Random.Range(min, max);
         _freeSource.spatialBlend = 1;
-
         _freeSource.Play();
     }
+
 
 }
