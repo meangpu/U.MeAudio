@@ -156,5 +156,14 @@ public class AudioManager : MonoBehaviour
         _freeSource.Play();
     }
 
+    public void PlayAudioClipOneShotAtPos(AudioClip _clip, Transform _trans, float _volume = 1, float min = 0.7f, float max = 1.5f)
+    {
+        transform.position = _trans.position;
+        _freeSource.volume = _volume;
+        _freeSource.pitch = UnityEngine.Random.Range(min, max);
+        _freeSource.spatialBlend = 1;
+        _freeSource.PlayOneShot(_clip);
+    }
+
 
 }
