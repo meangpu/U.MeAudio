@@ -9,8 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] Sound[] _sounds;
     public static AudioManager instance;
     private AudioSource[] _allAudioSources;
-    AudioSource _freeSource;
-    [SerializeField] AudioMixerGroup _mixer;
+    [SerializeField] AudioSource _freeSource;
 
 
     private void Awake()
@@ -35,8 +34,8 @@ public class AudioManager : MonoBehaviour
             s.source.spatialBlend = s.blend;
             s.source.loop = s.loop;
         }
-        _freeSource = gameObject.AddComponent<AudioSource>();
-        _freeSource.outputAudioMixerGroup = _mixer;
+        if (_freeSource == null) _freeSource = gameObject.AddComponent<AudioSource>();
+
     }
 
     Sound FindSound(string soundName)
