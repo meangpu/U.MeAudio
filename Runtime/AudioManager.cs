@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     private AudioSource[] _allAudioSources;
     AudioSource _freeSource;
-    AudioMixerGroup _mixer;
+    [SerializeField] AudioMixerGroup _mixer;
 
 
     private void Awake()
