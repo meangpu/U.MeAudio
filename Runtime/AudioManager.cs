@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using System;
 
 public class AudioManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     private AudioSource[] _allAudioSources;
     AudioSource _freeSource;
+    AudioMixerGroup _mixer;
+
 
     private void Awake()
     {
@@ -33,6 +36,7 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
         _freeSource = gameObject.AddComponent<AudioSource>();
+        _freeSource.outputAudioMixerGroup = _mixer;
     }
 
     Sound FindSound(string soundName)
