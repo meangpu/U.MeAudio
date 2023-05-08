@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour
     public void Play(string name)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.SetupSourceWithRandomVolAndPitch();
         soundObj.source.Play();
     }
@@ -57,6 +58,7 @@ public class AudioManager : MonoBehaviour
     public void Play(string name, float newVolume, float newPitch)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.source.volume = newVolume;
         soundObj.source.pitch = newPitch;
         soundObj.source.Play();
@@ -65,6 +67,7 @@ public class AudioManager : MonoBehaviour
     public void Play(SOSound soObj)
     {
         SOSound soundObj = FindSound(soObj.name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.SetupSourceWithRandomVolAndPitch();
         soundObj.source.Play();
     }
@@ -72,6 +75,7 @@ public class AudioManager : MonoBehaviour
     public void PlayChangeVol(string name, float newVolume)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.source.volume = newVolume;
         soundObj.source.Play();
     }
@@ -79,6 +83,7 @@ public class AudioManager : MonoBehaviour
     public void PlayChangePitch(string name, float newPitch)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.source.pitch = newPitch;
         soundObj.source.Play();
     }
@@ -86,6 +91,7 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShot(string name)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.SetupSourceWithRandomVolAndPitch();
         soundObj.source.PlayOneShot(soundObj.clip);
     }
@@ -94,6 +100,7 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShot(string name, float newVolume, float newPitch)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.source.volume = newVolume;
         soundObj.source.pitch = newPitch;
         soundObj.source.PlayOneShot(soundObj.clip);
@@ -102,6 +109,7 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShotChangeVolume(string name, float newVolume)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.source.pitch = newVolume;
         soundObj.source.PlayOneShot(soundObj.clip);
     }
@@ -109,6 +117,7 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShotChangePitch(string name, float newPitch)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
         soundObj.source.pitch = newPitch;
         soundObj.source.PlayOneShot(soundObj.clip);
     }
