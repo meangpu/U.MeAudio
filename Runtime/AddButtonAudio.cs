@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BtnSound : MonoBehaviour
+public class AddButtonAudio : MonoBehaviour
 {
     Button[] _allBtnList;
     [SerializeField] SOSound audioObj;
