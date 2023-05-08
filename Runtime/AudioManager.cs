@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using System;
 
 public class AudioManager : MonoBehaviour
 {
     // AudioManager.instance?.Play(playName);
 
-    [SerializeField] Sound[] _sounds;
+    [SerializeField] SOSound[] _sounds;
     public static AudioManager instance;
     private AudioSource[] _allAudioSources;
     [SerializeField] AudioSource _freeSource;
@@ -24,12 +23,11 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        foreach (Sound s in _sounds)
+        foreach (SOSound s in _sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
+            s.SetupSourceWithRandomVolAndPitch();
             s.source.clip = s.clip;
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
             s.source.outputAudioMixerGroup = s.mixerGroup;
             s.source.spatialBlend = s.blend;
             s.source.loop = s.loop;
@@ -38,9 +36,9 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    Sound FindSound(string soundName)
+    SOSound FindSound(string soundName)
     {
-        Sound foundSound = Array.Find(_sounds, sound => sound.audioName == soundName);
+        SOSound foundSound = Array.Find(_sounds, sound => sound.name == soundName);
         if (foundSound == null)
         {
             Debug.Log("No Sound Found");
@@ -51,45 +49,70 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string name)
     {
-        FindSound(name).source.Play();
+        SOSound soundObj = FindSound(name);
+        soundObj.SetupSourceWithRandomVolAndPitch();
+        soundObj.source.Play();
+    }
+
+    public void Play(string name, float newVolume, float newPitch)
+    {
+        SOSound soundObj = FindSound(name);
+        soundObj.source.volume = newVolume;
+        soundObj.source.pitch = newPitch;
+        soundObj.source.Play();
+    }
+
+    public void Play(SOSound soObj)
+    {
+        SOSound soundObj = FindSound(soObj.name);
+        soundObj.SetupSourceWithRandomVolAndPitch();
+        soundObj.source.Play();
+    }
+
+    public void PlayChangeVol(string name, float newVolume)
+    {
+        SOSound soundObj = FindSound(name);
+        soundObj.source.volume = newVolume;
+        soundObj.source.Play();
+    }
+
+    public void PlayChangePitch(string name, float newPitch)
+    {
+        SOSound soundObj = FindSound(name);
+        soundObj.source.pitch = newPitch;
+        soundObj.source.Play();
     }
 
     public void PlayOneShot(string name)
     {
-        Sound soundObj = FindSound(name);
+        SOSound soundObj = FindSound(name);
+        soundObj.SetupSourceWithRandomVolAndPitch();
         soundObj.source.PlayOneShot(soundObj.clip);
     }
 
-    public void PlayOneChangePitch(string name, float newPitchVal)
+
+    public void PlayOneShot(string name, float newVolume, float newPitch)
     {
-        Sound soundObj = FindSound(name);
-        soundObj.source.pitch = newPitchVal;
+        SOSound soundObj = FindSound(name);
+        soundObj.source.volume = newVolume;
+        soundObj.source.pitch = newPitch;
         soundObj.source.PlayOneShot(soundObj.clip);
     }
 
-    public void PlayRandomPitch(string name, float min = 0.7f, float max = 1.5f, float volume = 0)
+    public void PlayOneShotChangeVolume(string name, float newVolume)
     {
-        Sound soundObj = FindSound(name);
-        if (volume != 0) soundObj.source.volume = volume;
-        soundObj.source.pitch = UnityEngine.Random.Range(min, max);
-        soundObj.source.Play();
-    }
-
-    public void PlayRandomPitchMoreSwing(string name, float min = 0.5f, float max = 2.5f, float volume = 0)
-    {
-        Sound soundObj = FindSound(name);
-        if (volume != 0) soundObj.source.volume = volume;
-        soundObj.source.pitch = UnityEngine.Random.Range(min, max);
-        soundObj.source.Play();
-    }
-
-    public void PlayOneRandomPitch(string name, float min = 0.7f, float max = 1.5f, float volume = 0)
-    {
-        Sound soundObj = FindSound(name);
-        if (volume != 0) soundObj.source.volume = volume;
-        soundObj.source.pitch = UnityEngine.Random.Range(min, max);
+        SOSound soundObj = FindSound(name);
+        soundObj.source.pitch = newVolume;
         soundObj.source.PlayOneShot(soundObj.clip);
     }
+
+    public void PlayOneShotChangePitch(string name, float newPitch)
+    {
+        SOSound soundObj = FindSound(name);
+        soundObj.source.pitch = newPitch;
+        soundObj.source.PlayOneShot(soundObj.clip);
+    }
+
 
     public void StopAllSound()
     {
@@ -100,50 +123,19 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public AudioSource FindAudioSource(string soundName)
-    {
-        Sound foundSound = Array.Find(_sounds, sound => sound.audioName == soundName);
-        if (foundSound == null)
-        {
-            Debug.Log("No Sound Found");
-            return null;
-        }
-        AudioSource audioSourceComponent = foundSound.source;
-        return audioSourceComponent;
-    }
-
     public void MuteSourceByName(string soundName)
     {
-        Sound foundSound = Array.Find(_sounds, sound => sound.audioName == soundName);
-        if (foundSound == null)
-        {
-            Debug.Log("No Sound Found");
-            return;
-        }
-        AudioSource audioSourceComponent = foundSound.source;
-        audioSourceComponent.volume = 0;
+        FindSound(soundName).source.volume = 0;
     }
 
     public void SetSourceVolumeByName(string soundName, int newVol)
     {
-        Sound foundSound = Array.Find(_sounds, sound => sound.audioName == soundName);
-        if (foundSound == null)
-        {
-            Debug.Log("No Sound Found");
-            return;
-        }
-        foundSound.source.volume = newVol;
+        FindSound(soundName).source.volume = newVol;
     }
 
     public void ResetVolumeByName(string soundName)
     {
-        Sound foundSound = Array.Find(_sounds, sound => sound.audioName == soundName);
-        if (foundSound == null)
-        {
-            Debug.Log("No Sound Found");
-            return;
-        }
-        foundSound.source.volume = foundSound.volume;
+        FindSound(soundName).SetupSourceWithRandomVolAndPitch();
     }
 
     public void PlayAudioClipAtPos(AudioClip _clip, Transform _trans, float _volume = 1, float min = 0.7f, float max = 1.5f)
