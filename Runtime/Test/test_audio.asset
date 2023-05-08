@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: test_audio
   m_EditorClassIdentifier: 
   audioDes: test audio
-  clip: {fileID: 8300000, guid: 9f1409ae92920374faabae804df169ed, type: 3}
+  _clip:
+  - {fileID: 8300000, guid: 9f1409ae92920374faabae804df169ed, type: 3}
+  - {fileID: 8300000, guid: 9f1409ae92920374faabae804df169ed, type: 3}
   mixerGroup: {fileID: 8219120640885313815, guid: e4133e5e7f34c4743be3fe0ab8e68812, type: 2}
-  minVolume: 0.6
-  maxVolume: 0.8
-  minPitch: 0.8
-  maxPitch: 1.2
+  minVolume: 0.77
+  maxVolume: 0.99
+  minPitch: 1
+  maxPitch: 1.3
   blend: 0
   loop: 0
   source: {fileID: 0}

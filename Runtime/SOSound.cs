@@ -2,10 +2,16 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 [CreateAssetMenu(fileName = "SOSound", menuName = "Meangpu/SOSound")]
-public class SOSound : ScriptableObject
+public class SOSound : AudioEvent
 {
     public string audioDes;
-    public AudioClip clip;
+
+    public AudioClip[] _clip;
+    public AudioClip clip
+    {
+        get => _clip[Random.Range(0, _clip.Length)];
+    }
+
     public AudioMixerGroup mixerGroup;
 
     [MinMaxSlider(0f, 1f, "maxVolume", "VolumeRange")]
@@ -32,6 +38,16 @@ public class SOSound : ScriptableObject
     {
         source.volume = GetVolume();
         source.pitch = GetPitch();
+    }
+
+    public override void Play(AudioSource source)
+    {
+        if (_clip.Length == 0) return;
+
+        source.clip = _clip[Random.Range(0, _clip.Length)];
+        source.volume = GetVolume();
+        source.pitch = GetPitch();
+        source.Play();
     }
 
 }
