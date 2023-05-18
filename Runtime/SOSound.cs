@@ -50,4 +50,9 @@ public class SOSound : AudioEvent
         source.Play();
     }
 
+    public override void Stop(AudioSource source)
+    {
+        source.Stop();
+    }
+
 }

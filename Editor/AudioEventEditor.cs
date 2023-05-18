@@ -27,6 +27,10 @@ public class AudioEventEditor : Editor
         {
             ((AudioEvent)target).Play(_previewer);
         }
+        if (GUILayout.Button("Stop"))
+        {
+            ((AudioEvent)target).Stop(_previewer);
+        }
         EditorGUI.EndDisabledGroup();
     }
 }
