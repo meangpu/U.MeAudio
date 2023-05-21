@@ -166,6 +166,15 @@ public class AudioManager : MonoBehaviour
         _freeSource.PlayOneShot(_clip.clip);
     }
 
+    public void PlayAtPosOneShot(SOSound _clip, Transform _trans, float _volume)
+    {
+        transform.position = _trans.position;
+        _freeSource.volume = _volume;
+        _freeSource.pitch = _clip.GetPitch();
+        _freeSource.spatialBlend = 1;
+        _freeSource.PlayOneShot(_clip.clip);
+    }
+
 
 
 }
