@@ -11,5 +11,11 @@
   "author": {
     "name": "meangpu",
     "url": "https://github.com/meangpu"
-  }
+  },
+  "samples": [
+    {
+      "displayName": "AudioSlider",
+      "path": "Samples~/AudioSlider"
+    }
+  ]
 }
