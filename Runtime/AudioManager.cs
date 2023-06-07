@@ -32,7 +32,6 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
         if (_freeSource == null) _freeSource = gameObject.AddComponent<AudioSource>();
-
     }
 
     SOSound FindSound(string soundName)
