@@ -10,7 +10,6 @@ public class AudioManager : MonoBehaviour
     private AudioSource[] _allAudioSources;
     [SerializeField] AudioSource _freeSource;
 
-
     private void Awake()
     {
         if (instance == null)
@@ -96,10 +95,26 @@ public class AudioManager : MonoBehaviour
         soundObj.source.PlayOneShot(soundObj.clip);
     }
 
+    public void PlayOneShot(SOSound soObj)
+    {
+        SOSound soundObj = FindSound(soObj.name);
+        soundObj.source.clip = soundObj.clip;
+        soundObj.SetupSourceWithRandomVolAndPitch();
+        soundObj.source.PlayOneShot(soundObj.clip);
+    }
 
     public void PlayOneShot(string name, float newVolume, float newPitch)
     {
         SOSound soundObj = FindSound(name);
+        soundObj.source.clip = soundObj.clip;
+        soundObj.source.volume = newVolume;
+        soundObj.source.pitch = newPitch;
+        soundObj.source.PlayOneShot(soundObj.clip);
+    }
+
+    public void PlayOneShot(SOSound soObj, float newVolume, float newPitch)
+    {
+        SOSound soundObj = FindSound(soObj.name);
         soundObj.source.clip = soundObj.clip;
         soundObj.source.volume = newVolume;
         soundObj.source.pitch = newPitch;
@@ -121,7 +136,6 @@ public class AudioManager : MonoBehaviour
         soundObj.source.pitch = newPitch;
         soundObj.source.PlayOneShot(soundObj.clip);
     }
-
 
     public void StopAllSound()
     {
@@ -174,7 +188,4 @@ public class AudioManager : MonoBehaviour
         _freeSource.spatialBlend = 1;
         _freeSource.PlayOneShot(_clip.clip);
     }
-
-
-
 }
