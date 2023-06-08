@@ -4,7 +4,7 @@ using System;
 public class AudioManager : MonoBehaviour
 {
     // AudioManager.instance?.Play(playName);
-    // FindObjectOfType<AudioManager>().Play(name);
+    // FindObjectOfType<AudioManager>().Play(name); // this one better, less bug
 
     [SerializeField] SOSound[] _sounds;
     public static AudioManager instance;
