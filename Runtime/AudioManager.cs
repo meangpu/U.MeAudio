@@ -4,6 +4,7 @@ using System;
 public class AudioManager : MonoBehaviour
 {
     // AudioManager.instance?.Play(playName);
+    // FindObjectOfType<AudioManager>().Play(name);
 
     [SerializeField] SOSound[] _sounds;
     public static AudioManager instance;
@@ -32,6 +33,7 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
         if (_freeSource == null) _freeSource = gameObject.AddComponent<AudioSource>();
+
     }
 
     SOSound FindSound(string soundName)
