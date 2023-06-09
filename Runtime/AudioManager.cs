@@ -8,8 +8,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] SOSound[] _sounds;
     public static AudioManager instance;
     private AudioSource[] _allAudioSources;
-    [SerializeField] AudioSource _freeSource;
-
 
     private void Awake()
     {
@@ -32,8 +30,6 @@ public class AudioManager : MonoBehaviour
             s.source.spatialBlend = s.blend;
             s.source.loop = s.loop;
         }
-        if (_freeSource == null) _freeSource = gameObject.AddComponent<AudioSource>();
-
     }
 
     SOSound FindSound(string soundName)
@@ -96,7 +92,6 @@ public class AudioManager : MonoBehaviour
         soundObj.source.PlayOneShot(soundObj.clip);
     }
 
-
     public void PlayOneShot(string name, float newVolume, float newPitch)
     {
         SOSound soundObj = FindSound(name);
@@ -122,7 +117,6 @@ public class AudioManager : MonoBehaviour
         soundObj.source.PlayOneShot(soundObj.clip);
     }
 
-
     public void StopAllSound()
     {
         _allAudioSources = FindObjectsOfType<AudioSource>();
@@ -146,35 +140,4 @@ public class AudioManager : MonoBehaviour
     {
         FindSound(soundName).SetupSourceWithRandomVolAndPitch();
     }
-
-    public void PlayAtPos(SOSound _clip, Transform _trans)
-    {
-        transform.position = _trans.position;
-        _freeSource.clip = _clip.clip;
-        _freeSource.volume = _clip.GetVolume();
-        _freeSource.pitch = _clip.GetPitch();
-        _freeSource.spatialBlend = 1;
-        _freeSource.Play();
-    }
-
-    public void PlayAtPosOneShot(SOSound _clip, Transform _trans)
-    {
-        transform.position = _trans.position;
-        _freeSource.volume = _clip.GetVolume();
-        _freeSource.pitch = _clip.GetPitch();
-        _freeSource.spatialBlend = 1;
-        _freeSource.PlayOneShot(_clip.clip);
-    }
-
-    public void PlayAtPosOneShot(SOSound _clip, Transform _trans, float _volume)
-    {
-        transform.position = _trans.position;
-        _freeSource.volume = _volume;
-        _freeSource.pitch = _clip.GetPitch();
-        _freeSource.spatialBlend = 1;
-        _freeSource.PlayOneShot(_clip.clip);
-    }
-
-
-
 }
