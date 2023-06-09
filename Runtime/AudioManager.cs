@@ -92,6 +92,13 @@ public class AudioManager : MonoBehaviour
         soundObj.source.PlayOneShot(soundObj.clip);
     }
 
+    public void PlayOneShot(SOSound soundObj)
+    {
+        soundObj.source.clip = soundObj.clip;
+        soundObj.SetupSourceWithRandomVolAndPitch();
+        soundObj.source.PlayOneShot(soundObj.clip);
+    }
+
     public void PlayOneShot(string name, float newVolume, float newPitch)
     {
         SOSound soundObj = FindSound(name);
