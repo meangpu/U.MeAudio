@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class AudioPlayer : MonoBehaviour
+namespace Meangpu.Audio
 {
-    [SerializeField] SOSound sound;
-    [SerializeField] bool stopAllSound;
-    [SerializeField] bool playOnStart;
-
-    private void Start()
+    public class AudioPlayer : MonoBehaviour
     {
-        if (stopAllSound) AudioManager.instance?.StopAllSound();
-        if (playOnStart) AudioManager.instance?.Play(sound);
+        [SerializeField] SOSound sound;
+        [SerializeField] bool stopAllSound;
+        [SerializeField] bool playOnStart;
+
+        private void Start()
+        {
+            if (stopAllSound) AudioManager.instance?.StopAllSound();
+            if (playOnStart) AudioManager.instance?.Play(sound);
+        }
     }
-
-
 }

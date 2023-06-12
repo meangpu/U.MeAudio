@@ -2,107 +2,110 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 
-public class AudioManager : MonoBehaviour
+namespace Meangpu.Audio
 {
-    // AudioManager.instance?.Play(playName);
-    // SoSoundObj.Play();
-
-    [SerializeField] SOSound[] _sounds;
-    public static AudioManager instance;
-    private AudioSource[] _allAudioSources;
-
-    private void Awake()
+    public class AudioManager : MonoBehaviour
     {
-        if (instance == null)
+        // AudioManager.instance?.Play(playName);
+        // SoSoundObj.Play();
+
+        [SerializeField] SOSound[] _sounds;
+        public static AudioManager instance;
+        private AudioSource[] _allAudioSources;
+
+        private void Awake()
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            _sounds = Resources.LoadAll("SOSound", typeof(SOSound)).Cast<SOSound>().ToArray();
+
+            foreach (SOSound s in _sounds)
+            {
+                s.source = gameObject.AddComponent<AudioSource>();
+                s.SetupSourceWithRandomVolAndPitch();
+                s.source.clip = s.clip;
+                s.source.outputAudioMixerGroup = s.mixerGroup;
+                s.source.spatialBlend = s.blend;
+                s.source.loop = s.loop;
+            }
         }
-        else
+
+        public void Play(SOSound soObj)
         {
-            Destroy(gameObject);
+            soObj.SetupSourceWithRandomVolAndPitch();
+            soObj.source.Play();
         }
 
-        _sounds = Resources.LoadAll("SOSound", typeof(SOSound)).Cast<SOSound>().ToArray();
-
-        foreach (SOSound s in _sounds)
+        public void PlayOneShot(SOSound soObj)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.SetupSourceWithRandomVolAndPitch();
-            s.source.clip = s.clip;
-            s.source.outputAudioMixerGroup = s.mixerGroup;
-            s.source.spatialBlend = s.blend;
-            s.source.loop = s.loop;
+            if (soObj.source == null)
+            {
+                Debug.Log("No Audio SOurce");
+                return;
+            }
+            soObj.SetupSourceWithRandomVolAndPitch();
+            soObj.source.PlayOneShot(soObj.clip);
         }
-    }
 
-    public void Play(SOSound soObj)
-    {
-        soObj.SetupSourceWithRandomVolAndPitch();
-        soObj.source.Play();
-    }
-
-    public void PlayOneShot(SOSound soObj)
-    {
-        if (soObj.source == null)
+        public void PlayOneShot(SOSound soObj, float newVolume, float newPitch)
         {
-            Debug.Log("No Audio SOurce");
-            return;
+            soObj.source.volume = newVolume;
+            soObj.source.pitch = newPitch;
+            soObj.source.PlayOneShot(soObj.clip);
         }
-        soObj.SetupSourceWithRandomVolAndPitch();
-        soObj.source.PlayOneShot(soObj.clip);
-    }
 
-    public void PlayOneShot(SOSound soObj, float newVolume, float newPitch)
-    {
-        soObj.source.volume = newVolume;
-        soObj.source.pitch = newPitch;
-        soObj.source.PlayOneShot(soObj.clip);
-    }
-
-    public void StopAllSound()
-    {
-        _allAudioSources = FindObjectsOfType<AudioSource>();
-        foreach (AudioSource audio in _allAudioSources)
+        public void StopAllSound()
         {
-            audio.Stop();
+            _allAudioSources = FindObjectsOfType<AudioSource>();
+            foreach (AudioSource audio in _allAudioSources)
+            {
+                audio.Stop();
+            }
         }
-    }
 
-    public void MuteSourceByName(SOSound soundName) => soundName.source.volume = 0;
-    public void SetSourceVolumeByName(SOSound soundName, int newVol) => soundName.source.volume = newVol;
-    public void ResetVolumeByName(SOSound soundName) => soundName.SetupSourceWithRandomVolAndPitch();
+        public void MuteSourceByName(SOSound soundName) => soundName.source.volume = 0;
+        public void SetSourceVolumeByName(SOSound soundName, int newVol) => soundName.source.volume = newVol;
+        public void ResetVolumeByName(SOSound soundName) => soundName.SetupSourceWithRandomVolAndPitch();
 
-    public IEnumerator CoroutineFadeOut(SOSound soObj, float fadeTime = 1.3f)
-    {
-        float startVolume = soObj.source.volume;
-        while (soObj.source.volume > 0)
+        public IEnumerator CoroutineFadeOut(SOSound soObj, float fadeTime = 1.3f)
         {
-            soObj.source.volume -= startVolume * Time.deltaTime / fadeTime;
-            yield return null;
+            float startVolume = soObj.source.volume;
+            while (soObj.source.volume > 0)
+            {
+                soObj.source.volume -= startVolume * Time.deltaTime / fadeTime;
+                yield return null;
+            }
+            soObj.Stop();
         }
-        soObj.Stop();
-    }
 
-    public IEnumerator CoroutineFadeIn(SOSound soObj, float fadeTime = 1.3f)
-    {
-        soObj.Play();
-        soObj.source.volume = 0f;
-        float targetVolume = soObj.GetVolume();
-        while (soObj.source.volume < targetVolume)
+        public IEnumerator CoroutineFadeIn(SOSound soObj, float fadeTime = 1.3f)
         {
-            soObj.source.volume += Time.deltaTime / fadeTime;
-            yield return null;
+            soObj.Play();
+            soObj.source.volume = 0f;
+            float targetVolume = soObj.GetVolume();
+            while (soObj.source.volume < targetVolume)
+            {
+                soObj.source.volume += Time.deltaTime / fadeTime;
+                yield return null;
+            }
         }
-    }
 
-    public void FadeIn(SOSound soObj, float fadeTime = 1.3f)
-    {
-        StartCoroutine(CoroutineFadeIn(soObj, fadeTime));
-    }
+        public void FadeIn(SOSound soObj, float fadeTime = 1.3f)
+        {
+            StartCoroutine(CoroutineFadeIn(soObj, fadeTime));
+        }
 
-    public void FadeOut(SOSound soObj, float fadeTime = 1.3f)
-    {
-        StartCoroutine(CoroutineFadeOut(soObj, fadeTime));
+        public void FadeOut(SOSound soObj, float fadeTime = 1.3f)
+        {
+            StartCoroutine(CoroutineFadeOut(soObj, fadeTime));
+        }
     }
 }

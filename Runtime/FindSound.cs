@@ -1,17 +1,20 @@
 using UnityEngine;
 using System;
 
-public class FindSound
+namespace Meangpu.Audio
 {
-    SOSound[] _sounds;
-    SOSound FindSoundByName(string soundName)
+    public class FindSound
     {
-        SOSound foundSound = Array.Find(_sounds, sound => sound.name == soundName);
-        if (foundSound == null)
+        SOSound[] _sounds;
+        SOSound FindSoundByName(string soundName)
         {
-            Debug.Log("No Sound Found");
-            return null;
+            SOSound foundSound = Array.Find(_sounds, sound => sound.name == soundName);
+            if (foundSound == null)
+            {
+                Debug.Log("No Sound Found");
+                return null;
+            }
+            return foundSound;
         }
-        return foundSound;
     }
 }
