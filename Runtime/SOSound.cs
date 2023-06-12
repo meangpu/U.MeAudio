@@ -36,6 +36,7 @@ public class SOSound : AudioEvent
 
     public void SetupSourceWithRandomVolAndPitch()
     {
+        source.clip = _clip[Random.Range(0, _clip.Length)];
         source.volume = GetVolume();
         source.pitch = GetPitch();
     }
@@ -43,7 +44,6 @@ public class SOSound : AudioEvent
     public override void Play(AudioSource source)
     {
         if (_clip.Length == 0) return;
-
         source.clip = _clip[Random.Range(0, _clip.Length)];
         source.volume = GetVolume();
         source.pitch = GetPitch();
@@ -55,4 +55,22 @@ public class SOSound : AudioEvent
         source.Stop();
     }
 
+    public override void Play()
+    {
+        if (_clip.Length == 0) return;
+        SetupSourceWithRandomVolAndPitch();
+        source.Play();
+    }
+
+    public override void Stop()
+    {
+        source.Stop();
+    }
+
+    public void PlayOneShot()
+    {
+        if (_clip.Length == 0) return;
+        SetupSourceWithRandomVolAndPitch();
+        source.PlayOneShot(source.clip);
+    }
 }
