@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System;
 
 public class AudioManager : MonoBehaviour
 {
@@ -34,83 +33,28 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    SOSound FindSound(string soundName)
-    {
-        SOSound foundSound = Array.Find(_sounds, sound => sound.name == soundName);
-        if (foundSound == null)
-        {
-            Debug.Log("No Sound Found");
-            return null;
-        }
-        return foundSound;
-    }
-
-    public void Play(string name)
-    {
-        SOSound soundObj = FindSound(name);
-        soundObj.SetupSourceWithRandomVolAndPitch();
-        soundObj.source.Play();
-    }
-
-    public void Play(string name, float newVolume, float newPitch)
-    {
-        SOSound soundObj = FindSound(name);
-        soundObj.source.clip = soundObj.clip;
-        soundObj.source.volume = newVolume;
-        soundObj.source.pitch = newPitch;
-        soundObj.source.Play();
-    }
-
     public void Play(SOSound soObj)
     {
         soObj.SetupSourceWithRandomVolAndPitch();
         soObj.source.Play();
     }
 
-    public void PlayOneShot(string name)
+    public void PlayOneShot(SOSound soObj)
     {
-        SOSound soundObj = FindSound(name);
-        if (soundObj.source == null)
+        if (soObj.source == null)
         {
             Debug.Log("No Audio SOurce");
             return;
         }
-        soundObj.SetupSourceWithRandomVolAndPitch();
-        soundObj.source.PlayOneShot(soundObj.clip);
-    }
-
-    public void PlayOneShot(SOSound soundObj)
-    {
-        if (soundObj.source == null)
-        {
-            Debug.Log("No Audio SOurce");
-            return;
-        }
-        soundObj.SetupSourceWithRandomVolAndPitch();
-        soundObj.source.PlayOneShot(soundObj.clip);
-    }
-
-    public void PlayOneShot(string name, float newVolume, float newPitch)
-    {
-        SOSound soundObj = FindSound(name);
-        if (soundObj.source == null)
-        {
-            Debug.Log("No Audio SOurce");
-            return;
-        }
-        soundObj.source.clip = soundObj.clip;
-        soundObj.source.volume = newVolume;
-        soundObj.source.pitch = newPitch;
-        soundObj.source.PlayOneShot(soundObj.clip);
+        soObj.SetupSourceWithRandomVolAndPitch();
+        soObj.source.PlayOneShot(soObj.clip);
     }
 
     public void PlayOneShot(SOSound soObj, float newVolume, float newPitch)
     {
-        SOSound soundObj = FindSound(soObj.name);
-        soundObj.source.clip = soundObj.clip;
-        soundObj.source.volume = newVolume;
-        soundObj.source.pitch = newPitch;
-        soundObj.source.PlayOneShot(soundObj.clip);
+        soObj.source.volume = newVolume;
+        soObj.source.pitch = newPitch;
+        soObj.source.PlayOneShot(soObj.clip);
     }
 
     public void StopAllSound()
@@ -122,49 +66,40 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void MuteSourceByName(string soundName)
+    public void MuteSourceByName(SOSound soundName) => soundName.source.volume = 0;
+    public void SetSourceVolumeByName(SOSound soundName, int newVol) => soundName.source.volume = newVol;
+    public void ResetVolumeByName(SOSound soundName) => soundName.SetupSourceWithRandomVolAndPitch();
+
+    public IEnumerator CoroutineFadeOut(SOSound soObj, float fadeTime = 1.3f)
     {
-        FindSound(soundName).source.volume = 0;
+        float startVolume = soObj.source.volume;
+        while (soObj.source.volume > 0)
+        {
+            soObj.source.volume -= startVolume * Time.deltaTime / fadeTime;
+            yield return null;
+        }
+        soObj.Stop();
     }
 
-    public void SetSourceVolumeByName(string soundName, int newVol)
+    public IEnumerator CoroutineFadeIn(SOSound soObj, float fadeTime = 1.3f)
     {
-        FindSound(soundName).source.volume = newVol;
+        soObj.Play();
+        soObj.source.volume = 0f;
+        float targetVolume = soObj.GetVolume();
+        while (soObj.source.volume < targetVolume)
+        {
+            soObj.source.volume += Time.deltaTime / fadeTime;
+            yield return null;
+        }
     }
 
-    public void ResetVolumeByName(string soundName)
+    public void FadeIn(SOSound soObj, float fadeTime = 1.3f)
     {
-        FindSound(soundName).SetupSourceWithRandomVolAndPitch();
+        StartCoroutine(CoroutineFadeIn(soObj, fadeTime));
     }
 
-    // public static IEnumerator FadeOut(SOSound audioSource, float FadeTime = 1.3f)
-    // {
-    //     SOSound soundObj = FindSound(audioSource.name);
-    //     float startVolume = soundObj.source.volume;
-    //     while (soundObj.source.volume > 0)
-    //     {
-    //         audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
-    //         yield return null;
-    //     }
-    //     audioSource.Stop();
-    // }
-
-    // public static IEnumerator FadeIn(SOSound audioSource, float FadeTime = 1.3f)
-    // {
-    //     audioSource.Play();
-    //     audioSource.volume = 0f;
-    //     while (audioSource.volume < 1)
-    //     {
-    //         audioSource.volume += Time.deltaTime / FadeTime;
-    //         yield return null;
-    //     }
-    // }
-
-    // void Start()
-    // {
-    //     soudtrackAudioSource = GetComponent<AudioSource>();
-    // }
-
-    // StartCoroutine(AudioHelper.FadeIn(soudtrackAudioSource, fadeTime));
-    // StartCoroutine(AudioHelper.FadeOut(soudtrackAudioSource, fadeTime));
+    public void FadeOut(SOSound soObj, float fadeTime = 1.3f)
+    {
+        StartCoroutine(CoroutineFadeOut(soObj, fadeTime));
+    }
 }

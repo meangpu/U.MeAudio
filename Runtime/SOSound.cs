@@ -43,34 +43,39 @@ public class SOSound : AudioEvent
 
     public override void Play(AudioSource source)
     {
-        if (_clip.Length == 0) return;
+        if (_clip.Length == 0)
+        {
+            Debug.Log("No Audio Clip Detect");
+            return;
+        }
         source.clip = _clip[Random.Range(0, _clip.Length)];
         source.volume = GetVolume();
         source.pitch = GetPitch();
         source.Play();
     }
 
-    public override void Stop(AudioSource source)
-    {
-        source.Stop();
-    }
-
     public override void Play()
     {
-        if (_clip.Length == 0) return;
+        if (_clip.Length == 0)
+        {
+            Debug.Log("No Audio Clip Detect");
+            return;
+        }
         SetupSourceWithRandomVolAndPitch();
         source.Play();
     }
 
-    public override void Stop()
-    {
-        source.Stop();
-    }
-
     public void PlayOneShot()
     {
-        if (_clip.Length == 0) return;
+        if (_clip.Length == 0)
+        {
+            Debug.Log("No Audio Clip Detect");
+            return;
+        }
         SetupSourceWithRandomVolAndPitch();
         source.PlayOneShot(source.clip);
     }
+
+    public override void Stop(AudioSource source) => source.Stop();
+    public override void Stop() => source.Stop();
 }
