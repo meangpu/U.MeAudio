@@ -1,3 +1,4 @@
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using System;
 
@@ -9,7 +10,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] SOSound[] _sounds;
     public static AudioManager instance;
     private AudioSource[] _allAudioSources;
-    [SerializeField] AudioSource _freeSource;
 
     private void Awake()
     {
@@ -32,8 +32,6 @@ public class AudioManager : MonoBehaviour
             s.source.spatialBlend = s.blend;
             s.source.loop = s.loop;
         }
-        if (_freeSource == null) _freeSource = gameObject.AddComponent<AudioSource>();
-
     }
 
     SOSound FindSound(string soundName)
@@ -91,14 +89,23 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShot(string name)
     {
         SOSound soundObj = FindSound(name);
+        if (soundObj.source == null)
+        {
+            Debug.Log("No Audio SOurce");
+            return;
+        }
         soundObj.source.clip = soundObj.clip;
         soundObj.SetupSourceWithRandomVolAndPitch();
         soundObj.source.PlayOneShot(soundObj.clip);
     }
 
-    public void PlayOneShot(SOSound soObj)
+    public void PlayOneShot(SOSound soundObj)
     {
-        SOSound soundObj = FindSound(soObj.name);
+        if (soundObj.source == null)
+        {
+            Debug.Log("No Audio SOurce");
+            return;
+        }
         soundObj.source.clip = soundObj.clip;
         soundObj.SetupSourceWithRandomVolAndPitch();
         soundObj.source.PlayOneShot(soundObj.clip);
@@ -107,6 +114,11 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShot(string name, float newVolume, float newPitch)
     {
         SOSound soundObj = FindSound(name);
+        if (soundObj.source == null)
+        {
+            Debug.Log("No Audio SOurce");
+            return;
+        }
         soundObj.source.clip = soundObj.clip;
         soundObj.source.volume = newVolume;
         soundObj.source.pitch = newPitch;
@@ -125,6 +137,11 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShotChangeVolume(string name, float newVolume)
     {
         SOSound soundObj = FindSound(name);
+        if (soundObj.source == null)
+        {
+            Debug.Log("No Audio SOurce");
+            return;
+        }
         soundObj.source.clip = soundObj.clip;
         soundObj.source.pitch = newVolume;
         soundObj.source.PlayOneShot(soundObj.clip);
@@ -133,6 +150,11 @@ public class AudioManager : MonoBehaviour
     public void PlayOneShotChangePitch(string name, float newPitch)
     {
         SOSound soundObj = FindSound(name);
+        if (soundObj.source == null)
+        {
+            Debug.Log("No Audio SOurce");
+            return;
+        }
         soundObj.source.clip = soundObj.clip;
         soundObj.source.pitch = newPitch;
         soundObj.source.PlayOneShot(soundObj.clip);
@@ -160,33 +182,5 @@ public class AudioManager : MonoBehaviour
     public void ResetVolumeByName(string soundName)
     {
         FindSound(soundName).SetupSourceWithRandomVolAndPitch();
-    }
-
-    public void PlayAtPos(SOSound _clip, Transform _trans)
-    {
-        transform.position = _trans.position;
-        _freeSource.clip = _clip.clip;
-        _freeSource.volume = _clip.GetVolume();
-        _freeSource.pitch = _clip.GetPitch();
-        _freeSource.spatialBlend = 1;
-        _freeSource.Play();
-    }
-
-    public void PlayAtPosOneShot(SOSound _clip, Transform _trans)
-    {
-        transform.position = _trans.position;
-        _freeSource.volume = _clip.GetVolume();
-        _freeSource.pitch = _clip.GetPitch();
-        _freeSource.spatialBlend = 1;
-        _freeSource.PlayOneShot(_clip.clip);
-    }
-
-    public void PlayAtPosOneShot(SOSound _clip, Transform _trans, float _volume)
-    {
-        transform.position = _trans.position;
-        _freeSource.volume = _volume;
-        _freeSource.pitch = _clip.GetPitch();
-        _freeSource.spatialBlend = 1;
-        _freeSource.PlayOneShot(_clip.clip);
     }
 }
