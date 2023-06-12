@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        _sounds = Resources.LoadAll("SOSound", typeof(SOSound)).Cast<SOSound>().ToArray();
 
         foreach (SOSound s in _sounds)
         {
