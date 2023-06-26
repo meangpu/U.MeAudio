@@ -4,14 +4,21 @@ namespace Meangpu.Audio
 {
     public class AudioPlayer : MonoBehaviour
     {
-        [SerializeField] SOSound sound;
-        [SerializeField] bool stopAllSound;
-        [SerializeField] bool playOnStart;
+        [SerializeField] SOSound _sound;
+        [SerializeField] bool _stopAllSound;
+        [SerializeField] bool _playOnStart;
+
+        [SerializeField] bool _useFadeIn;
+        [SerializeField] float _fadeInTime = 1.3f;
 
         private void Start()
         {
-            if (stopAllSound) AudioManager.instance?.StopAllSound();
-            if (playOnStart) AudioManager.instance?.Play(sound);
+            if (_stopAllSound) AudioManager.instance?.StopAllSound();
+            if (_playOnStart)
+            {
+                if (_useFadeIn) AudioManager.instance?.FadeIn(_sound, _fadeInTime);
+                else AudioManager.instance?.Play(_sound);
+            }
         }
     }
 }
