@@ -55,6 +55,18 @@ namespace Meangpu.Audio
             soObj.source.PlayOneShot(soObj.clip);
         }
 
+        public void PlayOneShot(SOSound soObj, float newVolume)
+        {
+            if (soObj.source == null)
+            {
+                Debug.Log("No Audio SOurce");
+                return;
+            }
+            soObj.SetupSourceWithRandomVolAndPitch();
+            soObj.source.volume = newVolume;
+            soObj.source.PlayOneShot(soObj.clip);
+        }
+
         public void PlayOneShot(SOSound soObj, float newVolume, float newPitch)
         {
             soObj.source.volume = newVolume;
