@@ -67,6 +67,18 @@ namespace Meangpu.Audio
             source.Play();
         }
 
+        public override void Play(float newVolume)
+        {
+            if (_clip.Length == 0)
+            {
+                Debug.Log("No Audio Clip Detect");
+                return;
+            }
+            SetupSourceWithRandomVolAndPitch();
+            source.volume = newVolume;
+            source.Play();
+        }
+
         public void PlayOneShot()
         {
             if (_clip.Length == 0)
@@ -75,6 +87,30 @@ namespace Meangpu.Audio
                 return;
             }
             SetupSourceWithRandomVolAndPitch();
+            source.PlayOneShot(source.clip);
+        }
+
+        public void PlayOneShot(float newVolume)
+        {
+            if (_clip.Length == 0)
+            {
+                Debug.Log("No Audio Clip Detect");
+                return;
+            }
+            SetupSourceWithRandomVolAndPitch();
+            source.volume = newVolume;
+            source.PlayOneShot(source.clip);
+        }
+
+        public void PlayOneShotChangePitch(float newPitch)
+        {
+            if (_clip.Length == 0)
+            {
+                Debug.Log("No Audio Clip Detect");
+                return;
+            }
+            SetupSourceWithRandomVolAndPitch();
+            source.pitch = newPitch;
             source.PlayOneShot(source.clip);
         }
 
