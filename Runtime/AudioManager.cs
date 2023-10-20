@@ -18,7 +18,6 @@ namespace Meangpu.Audio
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
             }
             else
             {
