@@ -23,7 +23,7 @@ namespace Meangpu.Audio
         [SerializeField] bool _isLoadFromSave = true;
 
         [Button]
-        private void SetupMixerName()
+        private void UpdateComponentSliderNameBYExposeName()
         {
             static void SetMixerName(ref VolSlider _targetGroup, string newName)
             {
