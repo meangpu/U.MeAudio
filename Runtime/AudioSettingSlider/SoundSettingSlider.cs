@@ -33,7 +33,10 @@ namespace Meangpu.Audio
             SetMixerName(ref _master, _masterName);
             SetMixerName(ref _fx, _sfxName);
             SetMixerName(ref _bg, _bgName);
+
+#if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(this);
+#endif
         }
 
         private void Start()
