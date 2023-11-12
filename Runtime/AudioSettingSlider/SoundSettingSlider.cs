@@ -14,6 +14,11 @@ namespace Meangpu.Audio
         [SerializeField] VolSlider _fx;
         [SerializeField] VolSlider _bg;
 
+        [Header("ExposeName")]
+        [SerializeField] string _masterName = "SoundMaster";
+        [SerializeField] string _sfxName = "SoundFX";
+        [SerializeField] string _bgName = "SoundBG";
+
         [Header("Setting")]
         [SerializeField] bool _isLoadFromSave = true;
 
@@ -25,9 +30,9 @@ namespace Meangpu.Audio
                 if (_targetGroup != null) _targetGroup._mixerGroupName = newName;
             }
 
-            SetMixerName(ref _master, "Master");
-            SetMixerName(ref _fx, "Sfx");
-            SetMixerName(ref _bg, "Bg");
+            SetMixerName(ref _master, _masterName);
+            SetMixerName(ref _fx, _sfxName);
+            SetMixerName(ref _bg, _bgName);
             UnityEditor.EditorUtility.SetDirty(this);
         }
 
