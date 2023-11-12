@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using EasyButtons;
 
 namespace Meangpu.Audio
 {
@@ -9,12 +10,26 @@ namespace Meangpu.Audio
         [SerializeField] AudioMixer _mixer;
 
         [Header("Volume")]
-        [SerializeField] VolSlider _master = new("Master");
-        [SerializeField] VolSlider _fx = new("Sfx");
-        [SerializeField] VolSlider _bg = new("Bg");
+        [SerializeField] VolSlider _master;
+        [SerializeField] VolSlider _fx;
+        [SerializeField] VolSlider _bg;
 
         [Header("Setting")]
         [SerializeField] bool _isLoadFromSave = true;
+
+        [Button]
+        private void SetupMixerName()
+        {
+            static void SetMixerName(ref VolSlider _targetGroup, string newName)
+            {
+                if (_targetGroup != null) _targetGroup._mixerGroupName = newName;
+            }
+
+            SetMixerName(ref _master, "Master");
+            SetMixerName(ref _fx, "Sfx");
+            SetMixerName(ref _bg, "Bg");
+            UnityEditor.EditorUtility.SetDirty(this);
+        }
 
         private void Start()
         {

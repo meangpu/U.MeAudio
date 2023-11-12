@@ -3,29 +3,27 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
 
-[System.Serializable]
-class VolSlider
+namespace Meangpu.Audio
 {
-    public Slider _slider;
-    public TMP_Text _text;
-    public string _mixerGroupName;
-
-    public VolSlider(string _groupName)
+    [System.Serializable]
+    class VolSlider : MonoBehaviour
     {
-        _mixerGroupName = _groupName;
-    }
+        public Slider _slider;
+        public TMP_Text _volumeAmountText;
+        public string _mixerGroupName;
 
-    public void UpdateSliderTextVolumeValue(float newVal, AudioMixer mixer)
-    {
-        _slider.value = newVal;
-        UpdateTextAndVolume(newVal, mixer);
-    }
+        public void UpdateSliderTextVolumeValue(float newVal, AudioMixer mixer)
+        {
+            _slider.value = newVal;
+            UpdateTextAndVolume(newVal, mixer);
+        }
 
-    public void UpdateTextAndVolume(float newVal, AudioMixer mixer)
-    {
-        mixer.SetFloat(_mixerGroupName, Mathf.Log10(newVal) * 20);
+        public void UpdateTextAndVolume(float newVal, AudioMixer mixer)
+        {
+            mixer.SetFloat(_mixerGroupName, Mathf.Log10(newVal) * 20);
 
-        if (_text == null) return;
-        _text.SetText((newVal * 10).ToString("0"));
+            if (_volumeAmountText == null) return;
+            _volumeAmountText.SetText((newVal * 10).ToString("0"));
+        }
     }
 }
