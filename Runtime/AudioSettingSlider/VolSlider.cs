@@ -10,6 +10,11 @@ class VolSlider
     public TMP_Text _text;
     public string _mixerGroupName;
 
+    public VolSlider(string _groupName)
+    {
+        _mixerGroupName = _groupName;
+    }
+
     public void UpdateSliderTextVolumeValue(float newVal, AudioMixer mixer)
     {
         _slider.value = newVal;
@@ -18,7 +23,9 @@ class VolSlider
 
     public void UpdateTextAndVolume(float newVal, AudioMixer mixer)
     {
-        _text.SetText((newVal * 10).ToString("0"));
         mixer.SetFloat(_mixerGroupName, Mathf.Log10(newVal) * 20);
+
+        if (_text == null) return;
+        _text.SetText((newVal * 10).ToString("0"));
     }
 }
