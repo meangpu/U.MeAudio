@@ -7,12 +7,10 @@ namespace Meangpu.Audio
         [SerializeField] SOSound _sound;
         [SerializeField] bool _stopAllSound;
         [SerializeField] bool _playOnStart;
-
+        [Header("Fade")]
         [SerializeField] bool _useFadeIn;
         [SerializeField] float _fadeInTime = 1.3f;
-
         private void Start() => DoPlayThisEvent();
-
         public void DoPlayThisEvent()
         {
             if (_stopAllSound) AudioManager.instance?.StopAllSound();
