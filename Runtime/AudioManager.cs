@@ -30,7 +30,7 @@ namespace Meangpu.Audio
             {
                 s.source = gameObject.AddComponent<AudioSource>();
                 s.SetupSourceWithRandomVolAndPitch();
-                s.source.clip = s.clip;
+                s.source.clip = s.Clip;
                 s.source.outputAudioMixerGroup = s.mixerGroup;
                 s.source.spatialBlend = s.blend;
                 s.source.loop = s.loop;
@@ -51,7 +51,7 @@ namespace Meangpu.Audio
                 return;
             }
             soObj.SetupSourceWithRandomVolAndPitch();
-            soObj.source.PlayOneShot(soObj.clip);
+            soObj.source.PlayOneShot(soObj.Clip);
         }
 
         public void PlayOneShot(SOSound soObj, float newVolume)
@@ -63,14 +63,14 @@ namespace Meangpu.Audio
             }
             soObj.SetupSourceWithRandomVolAndPitch();
             soObj.source.volume = newVolume;
-            soObj.source.PlayOneShot(soObj.clip);
+            soObj.source.PlayOneShot(soObj.Clip);
         }
 
         public void PlayOneShot(SOSound soObj, float newVolume, float newPitch)
         {
             soObj.source.volume = newVolume;
             soObj.source.pitch = newPitch;
-            soObj.source.PlayOneShot(soObj.clip);
+            soObj.source.PlayOneShot(soObj.Clip);
         }
 
         public void StopAllSound()

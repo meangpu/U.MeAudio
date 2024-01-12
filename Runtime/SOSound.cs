@@ -9,7 +9,7 @@ namespace Meangpu.Audio
         public string audioDes;
 
         public AudioClip[] _clip;
-        public AudioClip clip
+        public AudioClip Clip
         {
             get => _clip[Random.Range(0, _clip.Length)];
         }
