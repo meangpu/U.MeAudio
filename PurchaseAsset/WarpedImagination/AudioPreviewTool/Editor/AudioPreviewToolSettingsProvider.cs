@@ -1,5 +1,5 @@
 ﻿//
-// Copyright (c) 2023 Warped Imagination. All rights reserved. 
+// Copyright (c) 2023 Warped Imagination. All rights reserved.
 //
 
 using UnityEditor;
@@ -24,16 +24,14 @@ namespace WarpedImagination.AudioPreviewTool
 
             GUILayout.Space(20f);
 
-            if(_content == null)
-                _content = new GUIContent("Enabled", "Switch this to enable the preview tool");
+            _content ??= new GUIContent("Enabled", "Switch this to enable the preview tool");
 
             bool enabled = EditorGUILayout.Toggle(_content, AudioPreviewToolSettings.Enabled);
-            if(enabled != AudioPreviewToolSettings.Enabled)
+            if (enabled != AudioPreviewToolSettings.Enabled)
             {
                 AudioPreviewToolSettings.Enabled = enabled;
             }
         }
-
 
         [SettingsProvider]
         public static SettingsProvider CreateSettingsProvider()
@@ -42,6 +40,5 @@ namespace WarpedImagination.AudioPreviewTool
             // Note: change second argument if you prefer the settings to be under Player Settings
             return new AudioPreviewToolSettingsProvider("Preferences/Tools/Audio Preview Tool", SettingsScope.User);
         }
-
     }
 }

@@ -11,27 +11,19 @@ using Meangpu.Audio;
 
 namespace WarpedImagination.AudioPreviewTool
 {
-
     /// <summary>
     /// Audio Preview Tool plays audio in the project view when an Audio Clip is double clicked
     /// </summary>
     public static class AudioPreviewTool
     {
-
-
         static int? _lastPlayedAudioClipId = null;
-
-        /// The code is split between Unity versions the reason is
-        /// Unity changed the names under the AudioUtil class
-
         /// <summary>
         /// Runs when someone double clicks on an audio file in the project window
         /// </summary>
         /// <param name="instanceId"></param>
-        /// <param name="line"></param>
         /// <returns></returns>
         [OnOpenAsset]
-        public static bool OnOpenAssetCallback(int instanceId, int line)
+        public static bool OnOpenAssetCallback(int instanceId)
         {
             // check that the tool is enabled under preferences
             if (!AudioPreviewToolSettings.Enabled)
@@ -41,49 +33,57 @@ namespace WarpedImagination.AudioPreviewTool
 
             if (obj is AudioClip audioClip)
             {
-                if (IsPreviewClipPlaying())
-                {
-                    StopAllPreviewClips();
-
-                    if (_lastPlayedAudioClipId.HasValue &&
-                        _lastPlayedAudioClipId.Value != instanceId)
-                    {
-                        PlayPreviewClip(audioClip);
-                    }
-                }
-                else
-                {
-                    PlayPreviewClip(audioClip);
-                }
-
-                _lastPlayedAudioClipId = instanceId;
-
+                OpenNormalAudioClip(instanceId, audioClip);
                 return true;
             }
 
             if (obj is SOSound meSoSOund)
             {
-                if (IsPreviewClipPlaying())
-                {
-                    StopAllPreviewClips();
-
-                    if (_lastPlayedAudioClipId.HasValue &&
-                        _lastPlayedAudioClipId.Value != instanceId)
-                    {
-                        PlayPreviewClip(meSoSOund.Clip);
-                    }
-                }
-                else
-                {
-                    PlayPreviewClip(meSoSOund.Clip);
-                }
-
-                _lastPlayedAudioClipId = instanceId;
-
+                OpenSOSound(instanceId, meSoSOund);
                 return true;
             }
 
             return false;
+        }
+
+        private static void OpenSOSound(int instanceId, SOSound meSoSOund)
+        {
+            if (IsPreviewClipPlaying())
+            {
+                StopAllPreviewClips();
+
+                if (_lastPlayedAudioClipId.HasValue &&
+                    _lastPlayedAudioClipId.Value != instanceId)
+                {
+                    PlayPreviewClip(meSoSOund.Clip);
+                }
+            }
+            else
+            {
+                PlayPreviewClip(meSoSOund.Clip);
+            }
+
+            _lastPlayedAudioClipId = instanceId;
+        }
+
+        private static void OpenNormalAudioClip(int instanceId, AudioClip audioClip)
+        {
+            if (IsPreviewClipPlaying())
+            {
+                StopAllPreviewClips();
+
+                if (_lastPlayedAudioClipId.HasValue &&
+                    _lastPlayedAudioClipId.Value != instanceId)
+                {
+                    PlayPreviewClip(audioClip);
+                }
+            }
+            else
+            {
+                PlayPreviewClip(audioClip);
+            }
+
+            _lastPlayedAudioClipId = instanceId;
         }
 
         public static void PlayPreviewClip(AudioClip audioClip)

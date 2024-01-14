@@ -23,9 +23,7 @@ namespace WarpedImagination.AudioPreviewTool
         {
             get
             {
-                if (!_enabled.HasValue)
-                    _enabled = EditorPrefs.GetBool(ENABLED_EDITOR_PREF, true);
-                return _enabled.Value;
+                return _enabled ??= EditorPrefs.GetBool(ENABLED_EDITOR_PREF, true);
             }
             set
             {
