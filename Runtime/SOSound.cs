@@ -33,16 +33,16 @@ namespace Meangpu.Audio
         [HideInInspector]
         public AudioSource source;
 
-        public float GetVolume() => Random.Range(minVolume, maxVolume);
-        public float GetPitch() => Random.Range(minPitch, maxPitch);
+        public float GetVolumeRandom() => Random.Range(minVolume, maxVolume);
+        public float GetPitchRandom() => Random.Range(minPitch, maxPitch);
 
-        public void SetPitch(float newPitch) => source.pitch = newPitch;
+        public void SetPitchToNewValue(float newPitch) => source.pitch = newPitch;
 
         public void SetupSourceWithRandomVolAndPitch()
         {
             source.clip = _clip[Random.Range(0, _clip.Length)];
-            source.volume = GetVolume();
-            source.pitch = GetPitch();
+            source.volume = GetVolumeRandom();
+            source.pitch = GetPitchRandom();
         }
 
         public override void Play(AudioSource source)
@@ -53,8 +53,8 @@ namespace Meangpu.Audio
                 return;
             }
             source.clip = _clip[Random.Range(0, _clip.Length)];
-            source.volume = GetVolume();
-            source.pitch = GetPitch();
+            source.volume = GetVolumeRandom();
+            source.pitch = GetPitchRandom();
             source.Play();
         }
 

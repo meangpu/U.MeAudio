@@ -101,7 +101,7 @@ namespace Meangpu.Audio
         {
             soObj.Play();
             soObj.source.volume = 0f;
-            float targetVolume = soObj.GetVolume();
+            float targetVolume = soObj.GetVolumeRandom();
             while (soObj.source.volume < targetVolume)
             {
                 soObj.source.volume += Time.deltaTime / fadeTime;
