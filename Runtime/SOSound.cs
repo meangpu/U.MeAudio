@@ -36,6 +36,8 @@ namespace Meangpu.Audio
         public float GetVolume() => Random.Range(minVolume, maxVolume);
         public float GetPitch() => Random.Range(minPitch, maxPitch);
 
+        public void SetPitch(float newPitch) => source.pitch = newPitch;
+
         public void SetupSourceWithRandomVolAndPitch()
         {
             source.clip = _clip[Random.Range(0, _clip.Length)];
