@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using EasyButtons;
+using VInspector;
 
 namespace Meangpu.Audio
 {
