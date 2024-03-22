@@ -69,6 +69,16 @@ namespace Meangpu.Audio
             source.Play();
         }
 
+        public void Pause()
+        {
+            if (_clip.Length == 0)
+            {
+                Debug.Log("No Audio Clip Detect");
+                return;
+            }
+            source.Pause();
+        }
+
         public override void Play(float newVolume)
         {
             if (_clip.Length == 0)
