@@ -25,11 +25,11 @@ namespace Meangpu.Audio
             DrawDefaultInspector();
 
             EditorGUI.BeginDisabledGroup(serializedObject.isEditingMultipleObjects);
-            if (GUILayout.Button("Preview"))
+            if (GUILayout.Button("Preview-Audio"))
             {
                 ((AudioEvent)target).Play(_previewer);
             }
-            if (GUILayout.Button("Stop"))
+            if (GUILayout.Button("Stop-Audio"))
             {
                 ((AudioEvent)target).Stop(_previewer);
             }
