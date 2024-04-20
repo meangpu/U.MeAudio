@@ -46,17 +46,17 @@ namespace Meangpu.Audio
             source.pitch = GetPitchRandom();
         }
 
-        public override void Play(AudioSource source)
+        public override void Play(AudioSource playingSource)
         {
             if (_clip.Length == 0)
             {
                 Debug.Log("No Audio Clip Detect");
                 return;
             }
-            source.clip = _clip[Random.Range(0, _clip.Length)];
-            source.volume = GetVolumeRandom();
-            source.pitch = GetPitchRandom();
-            source.Play();
+            playingSource.clip = _clip[Random.Range(0, _clip.Length)];
+            playingSource.volume = GetVolumeRandom();
+            playingSource.pitch = GetPitchRandom();
+            playingSource.Play();
         }
 
         public override void Play()
@@ -127,7 +127,7 @@ namespace Meangpu.Audio
             source.PlayOneShot(source.clip);
         }
 
-        public override void Stop(AudioSource source) => source.Stop();
+        public override void Stop(AudioSource playingSource) => playingSource.Stop();
         public override void Stop() => source.Stop();
     }
 }

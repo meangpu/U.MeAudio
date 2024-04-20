@@ -6,14 +6,17 @@ namespace Meangpu.Audio
     public class AddButtonAudio : MonoBehaviour
     {
         Button[] _allBtnList;
-        [SerializeField] SOSound audioObj;
+        [SerializeField] SOSound _clickSound;
 
         private void Start()
         {
             _allBtnList = Resources.FindObjectsOfTypeAll<Button>();
-            foreach (Button _b in _allBtnList) _b.onClick.AddListener(PlaySound);
+            foreach (Button _b in _allBtnList)
+            {
+                _b.onClick.AddListener(PlayClickSound);
+            }
         }
 
-        void PlaySound() => AudioManager.instance?.Play(audioObj);
+        void PlayClickSound() => _clickSound?.PlayOneShot();
     }
 }
