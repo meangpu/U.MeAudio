@@ -6,6 +6,7 @@ namespace Meangpu.Audio
     [CreateAssetMenu(fileName = "SOSound", menuName = "Meangpu/SOSound")]
     public class SOSound : AudioEvent
     {
+        [TextArea]
         public string audioDes;
 
         public AudioClip[] _clip;
