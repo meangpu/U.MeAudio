@@ -1,11 +1,10 @@
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 namespace Meangpu.Audio
 {
-#endif
-
     [CustomEditor(typeof(AudioEvent), true)]
     public class AudioEventEditor : Editor
     {
