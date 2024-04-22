@@ -5,7 +5,7 @@ namespace Meangpu.Audio
 {
     public class AudioPitchByTimeScale : MonoBehaviour
     {
-        [SerializeField] float _minPitch = 0.3f;
+        [SerializeField] float _minPitch = 0.4f;
         [SerializeField] float _maxPitch = 1.2f;
         [SerializeField] SOSound[] _soundToChangePitch;
         [Tooltip("Add time scale ref here")]
