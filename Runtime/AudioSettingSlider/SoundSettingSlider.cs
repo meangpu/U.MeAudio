@@ -65,6 +65,18 @@ namespace Meangpu.Audio
             else return defaultVal;
         }
 
+        [Button]
+        public void ResetSoundSlider()
+        {
+            UpdateVolumeValue(_master, .5f);
+            UpdateVolumeValue(_bg, .5f);
+            UpdateVolumeValue(_fx, .5f);
+
+            _master.UpdateSliderTextVolumeValue(.5f, _mixer);
+            _fx.UpdateSliderTextVolumeValue(.5f, _mixer);
+            _bg.UpdateSliderTextVolumeValue(.5f, _mixer);
+        }
+
         void LoadSoundSetting()
         {
             float saved_Master;
