@@ -66,7 +66,7 @@ namespace Meangpu.Audio
         }
 
         [Button]
-        public void ResetSoundSlider()
+        public void ResetSoundSliderValueSetting()
         {
             UpdateVolumeValue(_master, .5f);
             UpdateVolumeValue(_bg, .5f);
