@@ -11,13 +11,13 @@ namespace Meangpu.Audio
 
         [Header("Volume")]
         [SerializeField] VolSlider _master;
-        [SerializeField] VolSlider _fx;
         [SerializeField] VolSlider _bg;
+        [SerializeField] VolSlider _fx;
 
         [Header("ExposeName")]
         [SerializeField] string _masterName = "SoundMaster";
-        [SerializeField] string _sfxName = "SoundFX";
         [SerializeField] string _bgName = "SoundBG";
+        [SerializeField] string _sfxName = "SoundFX";
 
         [Header("Setting")]
         [SerializeField] bool _isLoadFromSave = true;
