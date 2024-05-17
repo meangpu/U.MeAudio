@@ -19,7 +19,7 @@ namespace Meangpu.Audio
         float saved_FX;
         float saved_BG;
 
-        private void Awake() => DoLoadSoundSetting();
+        private void Start() => DoLoadSoundSetting();
 
         void UpdateVolume(string name, float newValue) => _mixer.SetFloat(name, Mathf.Log10(newValue) * 20);
 
