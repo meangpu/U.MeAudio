@@ -31,6 +31,7 @@ namespace Meangpu.Audio
 
         public void DoLoadSoundSetting()
         {
+            Debug.Log("do load sound setting");
             saved_Master = GetCreateSoundSetting(_masterName);
             saved_FX = GetCreateSoundSetting(_sfxName);
             saved_BG = GetCreateSoundSetting(_bgName);
