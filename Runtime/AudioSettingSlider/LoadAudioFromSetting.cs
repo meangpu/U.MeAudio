@@ -19,7 +19,7 @@ namespace Meangpu.Audio
         float saved_FX;
         float saved_BG;
 
-        private void Awake() => DoLoadSoundSetting();
+        private void Start() => DoLoadSoundSetting();
 
         void UpdateVolume(string name, float newValue) => _mixer.SetFloat(name, Mathf.Log10(newValue) * 20);
 
@@ -31,7 +31,6 @@ namespace Meangpu.Audio
 
         public void DoLoadSoundSetting()
         {
-            Debug.Log("do load sound setting");
             saved_Master = GetCreateSoundSetting(_masterName);
             saved_FX = GetCreateSoundSetting(_sfxName);
             saved_BG = GetCreateSoundSetting(_bgName);
